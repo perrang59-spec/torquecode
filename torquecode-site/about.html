@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About TorqueCode — Independent OBD-II Guidance</title>
+  <meta name="description" content="Why TorqueCode exists: independent, practical OBD-II diagnostics, clear fix paths and safe fuel-saving advice with no sponsored parts or paywalls.">
+  <meta name="theme-color" content="#0a0e13">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    (function () {
+      try {
+        var raw = localStorage.getItem("tc-theme");
+        if (raw) {
+          var theme = JSON.parse(raw);
+          if (theme === "light" || theme === "dark") document.documentElement.setAttribute("data-theme", theme);
+        }
+      } catch (e) { /* default dark */ }
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 14 4-4"/><circle cx="12" cy="14" r="1" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-name">Torque<span class="accent">Code</span><small>Diagnostics &amp; efficiency</small></span>
+      </a>
+      <nav class="nav" id="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="codes.html">Code library</a>
+        <a class="nav-link" href="codes.html?view=saved">Saved codes</a>
+        <a class="nav-link" href="tips.html">Fuel-saving tips</a>
+        <a class="nav-link is-active" href="about.html">About</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" data-theme-toggle type="button" aria-label="Switch to light theme" title="Switch theme">
+          <svg class="icon moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+          <svg class="icon sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <button class="icon-btn menu-btn" data-menu-toggle type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a><span class="sep">/</span><span>About</span>
+        </nav>
+        <div class="page-hero-with-side">
+          <div>
+            <span class="eyebrow">About TorqueCode · independent diagnostics</span>
+            <h1 class="page-title">Built for the driveway,<br>not the dealership.</h1>
+            <p class="page-sub">TorqueCode is a free, independent field guide for OBD-II trouble codes and safe fuel-saving habits. It exists for one reason: to help you understand what your car is telling you before you approve a repair, replace a part, or change how you drive.</p>
+          </div>
+          <div class="hero-mini-panel">
+            <div class="big">100%</div>
+            <div class="small">free &amp; independent<br>no sponsored<br>recommendations</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stat-strip" aria-label="TorqueCode at a glance">
+      <div class="container">
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-value">73</div>
+            <div class="stat-label">Documented codes</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">420</div>
+            <div class="stat-label">Step-by-step fixes</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">22</div>
+            <div class="stat-label">Eco-driving habits</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">0</div>
+            <div class="stat-label">Sponsored parts</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container about-grid">
+        <div class="about-copy reveal">
+          <span class="eyebrow">Why it exists</span>
+          <h2 class="section-title">A code is a clue.<br>Not a repair order.</h2>
+          <p>Most drivers meet diagnostics at the worst possible moment: a warning light, a quote, and no clear way to judge whether the repair makes sense. A five-character code can point to a sensor, a wiring fault, a vacuum leak, or a mechanical problem — and the most expensive part is rarely the first thing to replace.</p>
+          <p>TorqueCode turns that code into a readable brief. You get the likely symptoms, the common causes, a sensible test order, realistic cost ranges, and the safety limits. The fuel-saving side follows the same rule: no hypermiling tricks, no dangerous shortcuts, just habits that work in real traffic.</p>
+          <p class="about-signoff">No accounts · no paywall · no sponsored parts</p>
+        </div>
+
+        <aside class="about-panel reveal" aria-labelledby="inside-entry">
+          <span class="eyebrow no-rule">Inside every entry</span>
+          <h3 id="inside-entry">What you get before you spend</h3>
+          <ul class="check-list">
+            <li>Symptoms you may actually notice, not just a dictionary definition.</li>
+            <li>Common causes ranked by how often they explain the fault.</li>
+            <li>An ordered diagnostic path that starts with the least invasive tests.</li>
+            <li>Realistic cost ranges and a clear DIY-versus-shop recommendation.</li>
+            <li>Related codes, so one clue can lead you to the wider system.</li>
+            <li>Safety notes for faults that should keep the car parked.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" style="background: var(--bg-soft); border-block: 1px solid var(--line-soft);">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">How the library is built</span>
+            <h2 class="section-title">Detail, in the right order.</h2>
+            <p class="section-sub">Every entry answers three questions: what is the car complaining about, what should I test first, and when should I stop and hand it to a professional?</p>
+          </div>
+        </div>
+        <div class="facts">
+          <div class="fact">
+            <div class="fact-label">01 · Decode</div>
+            <h3>Start with the system</h3>
+            <p>We begin with the code family, the circuit it refers to, and the symptoms that usually accompany it. That keeps the diagnosis anchored to the car instead of a guess.</p>
+          </div>
+          <div class="fact">
+            <div class="fact-label">02 · Test</div>
+            <h3>Build a sensible order</h3>
+            <p>Checks and measurements come before parts. The goal is to confirm the fault, rule out the cheap causes, and avoid replacing a component that was never broken.</p>
+          </div>
+          <div class="fact">
+            <div class="fact-label">03 · Decide</div>
+            <h3>Add the real-world context</h3>
+            <p>Difficulty, tools, typical cost and safety risk decide whether a job belongs in a driveway or a workshop. We show the trade-off instead of pretending every repair is DIY.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">What we stand for</span>
+            <h2 class="section-title">Fast answers. No reckless shortcuts.</h2>
+            <p class="section-sub">The site is designed to be useful when you are standing next to a car, not just readable on a desk.</p>
+          </div>
+        </div>
+        <div class="about-values">
+          <article class="about-value">
+            <span class="num">01 · Safety</span>
+            <h3>Control beats MPG</h3>
+            <p>No saving is worth less steering, braking, traction or reaction time. We never recommend neutral-coasting, drafting, over-inflated tires, rolling stops or shutting the engine off while moving.</p>
+          </article>
+          <article class="about-value">
+            <span class="num">02 · Diagnosis</span>
+            <h3>Test before you replace</h3>
+            <p>A trouble code names a circuit or a system, not always the failed component. We put checks, measurements and observation before the parts cannon.</p>
+          </article>
+          <article class="about-value">
+            <span class="num">03 · Clarity</span>
+            <h3>Explain the why</h3>
+            <p>Each cause and test says why it matters. The aim is to help you ask better questions and have a more useful conversation with a technician.</p>
+          </article>
+          <article class="about-value">
+            <span class="num">04 · Independence</span>
+            <h3>No pay-to-play</h3>
+            <p>TorqueCode is free to use, with no affiliate links, no advertising and no sponsored rankings. Recommendations follow diagnostic logic, not a parts catalogue.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="disclaimer">
+          <strong>What this site is not.</strong> TorqueCode is an educational reference, not a repair manual, a replacement for factory service information or technical service bulletins, or a quote from a shop. Procedures, torque specifications, fluids and code definitions vary by year, make, model, engine and market. Confirm the exact procedure for your vehicle, and stop driving if a fault makes the car unsafe to control.
+        </div>
+        <div class="cta-band reveal" style="margin-top: 30px;">
+          <div>
+            <span class="eyebrow">Start with the clue</span>
+            <h2 style="margin-top: 10px;">Know what you are looking at.</h2>
+            <p>Search a code, read the test order, then decide whether it is a driveway job or a shop job. If the car is not safe to drive, park it first.</p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a class="btn btn-primary" href="codes.html">Browse the code library <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+            <a class="btn btn-ghost" href="tips.html">See the eco checklist</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 14 4-4"/><circle cx="12" cy="14" r="1" fill="currentColor"/>
+              </svg>
+            </span>
+            <span class="brand-name">Torque<span class="accent">Code</span><small>Diagnostics &amp; efficiency</small></span>
+          </a>
+          <p>Clear, practical OBD-II guidance and safe eco-driving advice. Built to help you ask better questions before you spend money.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Library</h3>
+          <ul>
+            <li><a href="codes.html">All codes</a></li>
+            <li><a href="codes.html?system=P">Powertrain</a></li>
+            <li><a href="codes.html?system=B">Body</a></li>
+            <li><a href="codes.html?system=C">Chassis</a></li>
+            <li><a href="codes.html?system=U">Network</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Learn</h3>
+          <ul>
+            <li><a href="index.html#anatomy">How to read a code</a></li>
+            <li><a href="tips.html">Eco-driving tips</a></li>
+            <li><a href="tips.html#calculator">Fuel savings calculator</a></li>
+            <li><a href="codes.html?view=saved">Saved codes</a></li>
+            <li><a href="about.html">About TorqueCode</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Before you turn a wrench</h3>
+          <p class="footer-note">Trouble codes are a starting point, not a repair order. Definitions and test procedures vary by year, make, model and engine. Confirm with factory service information and TSBs.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> TorqueCode</span>
+        <span>Built for wrenching, learning &amp; driving smarter</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+</body>
+</html>

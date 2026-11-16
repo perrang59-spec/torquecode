@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Safe Fuel-Saving Tips &amp; Savings Calculator | TorqueCode</title>
+  <meta name="description" content="22 practical, safe eco-driving tips that cut fuel use. Track your habits, avoid common fuel myths, and estimate your annual savings and CO2 reduction.">
+  <meta name="theme-color" content="#0a0e13">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    (function () {
+      try {
+        var raw = localStorage.getItem("tc-theme");
+        if (raw) {
+          var theme = JSON.parse(raw);
+          if (theme === "light" || theme === "dark") document.documentElement.setAttribute("data-theme", theme);
+        }
+      } catch (e) { /* default dark */ }
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 14 4-4"/><circle cx="12" cy="14" r="1" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-name">Torque<span class="accent">Code</span><small>Diagnostics &amp; efficiency</small></span>
+      </a>
+      <nav class="nav" id="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="codes.html">Code library</a>
+        <a class="nav-link" href="codes.html?view=saved">Saved codes</a>
+        <a class="nav-link is-active" href="tips.html">Fuel-saving tips</a>
+        <a class="nav-link" href="about.html">About</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" data-theme-toggle type="button" aria-label="Switch to light theme" title="Switch theme">
+          <svg class="icon moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+          <svg class="icon sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <button class="icon-btn menu-btn" data-menu-toggle type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a><span class="sep">/</span><span>Fuel-saving tips</span>
+        </nav>
+        <div class="page-hero-with-side">
+          <div>
+            <span class="eyebrow">Safe eco-driving · no hypermiling stunts</span>
+            <h1 class="page-title">Drive smoother.<br>Burn less.</h1>
+            <p class="page-sub">Small changes in how you accelerate, plan and maintain the car add up over a year. Pick a few habits, mark them off, and use the calculator to see what they are worth to you.</p>
+          </div>
+          <div class="hero-mini-panel">
+            <div class="big">10–20%</div>
+            <div class="small">Typical real-world<br>fuel reduction from<br>smoother driving</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tips-layout">
+      <div class="container">
+        <h2 class="visually-hidden">Eco-driving checklist</h2>
+        <div class="tips-toolbar">
+          <div class="chip-group" id="tipChips" role="group" aria-label="Filter tips by category">
+            <button class="chip is-active" type="button" data-category="all">All tips</button>
+            <button class="chip" type="button" data-category="Driving habits">Driving habits</button>
+            <button class="chip" type="button" data-category="Maintenance">Maintenance</button>
+            <button class="chip" type="button" data-category="Route &amp; planning">Route &amp; planning</button>
+            <button class="chip" type="button" data-category="Vehicle care">Vehicle care</button>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span>Your eco checklist</span>
+              <span id="tipProgressText">0 / 22</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-label="Eco checklist progress" aria-valuemin="0" aria-valuemax="22" aria-valuenow="0" id="tipProgressBar">
+              <div class="progress-fill" id="tipProgressFill"></div>
+            </div>
+          </div>
+          <button class="btn btn-ghost btn-sm" type="button" id="resetTips">Reset checklist</button>
+        </div>
+
+        <div class="tips-list" id="tipList"></div>
+      </div>
+    </section>
+
+    <section class="section" id="calculator" style="background: var(--bg-soft); border-block: 1px solid var(--line-soft);">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Do the math</span>
+            <h2 class="section-title">What could smoother driving save you?</h2>
+            <p class="section-sub">A rough annual estimate, based on reducing the fuel your car already uses. Adjust the inputs and the slider to match your commute and goals.</p>
+          </div>
+        </div>
+
+        <div class="calc">
+          <div class="calc-form">
+            <h3>Your driving profile</h3>
+            <p>Use your own annual distance, real-world economy and local fuel price.</p>
+
+            <div class="segmented" role="group" aria-label="Measurement units">
+              <button type="button" data-units="us" class="is-active">US units</button>
+              <button type="button" data-units="metric">Metric</button>
+            </div>
+
+            <div class="calc-fields">
+              <div class="field">
+                <label for="calcDistance" id="distanceLabel">Annual distance</label>
+                <div class="field-input">
+                  <input id="calcDistance" type="number" min="0" step="500" value="12000" inputmode="decimal">
+                  <span class="unit" id="distanceUnit">mi</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="calcEconomy" id="economyLabel">Fuel economy</label>
+                <div class="field-input">
+                  <input id="calcEconomy" type="number" min="1" step="0.1" value="25" inputmode="decimal">
+                  <span class="unit" id="economyUnit">MPG</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="calcPrice" id="priceLabel">Fuel price</label>
+                <div class="field-input">
+                  <input id="calcPrice" type="number" min="0" step="0.01" value="3.50" inputmode="decimal">
+                  <span class="unit" id="priceUnit">$ / gal</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="calcNewEconomy">Projected economy</label>
+                <div class="field-input" style="border-style: dashed;">
+                  <input id="calcNewEconomy" type="text" value="27.8" readonly tabindex="-1">
+                  <span class="unit" id="newEconomyUnit">MPG</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="range-field">
+              <div class="range-head">
+                <label for="calcReduction">How much less fuel?</label>
+                <strong id="calcReductionValue">10%</strong>
+              </div>
+              <input id="calcReduction" type="range" min="5" max="30" step="1" value="10">
+            </div>
+          </div>
+
+          <div class="calc-out" aria-live="polite">
+            <span class="eyebrow no-rule">Estimated annual savings</span>
+            <div class="calc-big" id="calcBig">$168<small> / year</small></div>
+            <p class="calc-caption" id="calcCaption">Cutting fuel use by 10% at 12,000 miles, 25 MPG and $3.50/gal.</p>
+            <div class="calc-stats">
+              <div class="calc-stat"><span>Fuel saved</span><strong id="calcFuel">48 gal</strong></div>
+              <div class="calc-stat"><span>CO₂ avoided</span><strong id="calcCo2">427 kg</strong></div>
+              <div class="calc-stat"><span>New economy</span><strong id="calcNew">27.8 MPG</strong></div>
+              <div class="calc-stat"><span>Cost per distance</span><strong id="calcPerMile">$0.14 / mi</strong></div>
+            </div>
+            <div class="calc-note">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+              <span>Estimates assume the reduction applies to total fuel use. Real savings depend on your routes, climate, vehicle and how consistently you apply the habits. CO₂ uses 8.89 kg per gallon of gasoline (2.31 kg per liter).</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="facts" id="facts"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="disclaimer" style="margin-bottom: 30px;">
+          <strong>Drive for safety, not just numbers.</strong> Never coast in neutral, draft large vehicles, over-inflate tires, run red lights to "keep momentum" or shut the engine off while moving. Fuel-saving techniques should never reduce steering assist, braking performance, traction or your reaction time. Follow all traffic laws.
+        </div>
+        <div class="cta-band reveal">
+          <div>
+            <span class="eyebrow">Code + habit</span>
+            <h2 style="margin-top: 10px;">A healthy car is a frugal car.</h2>
+            <p>A persistent check engine light can quietly cost you fuel. Look up the code, fix the root cause and then work on the driving habits.</p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a class="btn btn-primary" href="codes.html">Search diagnostic codes <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+            <a class="btn btn-ghost" href="index.html#anatomy">How to read a code</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 14 4-4"/><circle cx="12" cy="14" r="1" fill="currentColor"/>
+              </svg>
+            </span>
+            <span class="brand-name">Torque<span class="accent">Code</span><small>Diagnostics &amp; efficiency</small></span>
+          </a>
+          <p>Clear, practical OBD-II guidance and safe eco-driving advice. Built to help you ask better questions before you spend money.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Library</h3>
+          <ul>
+            <li><a href="codes.html">All codes</a></li>
+            <li><a href="codes.html?system=P">Powertrain</a></li>
+            <li><a href="codes.html?system=B">Body</a></li>
+            <li><a href="codes.html?system=C">Chassis</a></li>
+            <li><a href="codes.html?system=U">Network</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Learn</h3>
+          <ul>
+            <li><a href="index.html#anatomy">How to read a code</a></li>
+            <li><a href="tips.html">Eco-driving tips</a></li>
+            <li><a href="tips.html#calculator">Fuel savings calculator</a></li>
+            <li><a href="codes.html?view=saved">Saved codes</a></li>
+            <li><a href="about.html">About TorqueCode</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Before you turn a wrench</h3>
+          <p class="footer-note">Trouble codes are a starting point, not a repair order. Definitions and test procedures vary by year, make, model and engine. Confirm with factory service information and TSBs.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> TorqueCode</span>
+        <span>Built for wrenching, learning &amp; driving smarter</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data-codes.js"></script>
+  <script src="js/data-codes-extra.js"></script>
+  <script src="js/data-tips.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/tips.js"></script>
+</body>
+</html>

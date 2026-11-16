@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OBD-II Code Library — Diagnosis, Causes &amp; Fixes | TorqueCode</title>
+  <meta name="description" content="Search 73 OBD-II diagnostic codes by code, symptom or system. See symptoms, common causes, step-by-step fixes, difficulty, cost estimates and related codes.">
+  <meta name="theme-color" content="#0a0e13">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    (function () {
+      try {
+        var raw = localStorage.getItem("tc-theme");
+        if (raw) {
+          var theme = JSON.parse(raw);
+          if (theme === "light" || theme === "dark") document.documentElement.setAttribute("data-theme", theme);
+        }
+      } catch (e) { /* default dark */ }
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 14 4-4"/><circle cx="12" cy="14" r="1" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-name">Torque<span class="accent">Code</span><small>Diagnostics &amp; efficiency</small></span>
+      </a>
+      <nav class="nav" id="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link is-active" href="codes.html">Code library</a>
+        <a class="nav-link" href="codes.html?view=saved">Saved codes</a>
+        <a class="nav-link" href="tips.html">Fuel-saving tips</a>
+        <a class="nav-link" href="about.html">About</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" data-theme-toggle type="button" aria-label="Switch to light theme" title="Switch theme">
+          <svg class="icon moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+          <svg class="icon sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <button class="icon-btn menu-btn" data-menu-toggle type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a><span class="sep">/</span><span>Code library</span>
+        </nav>
+        <div class="page-hero-with-side">
+          <div>
+            <span class="eyebrow">73 codes · 4 systems · clear fix paths</span>
+            <h1 class="page-title">Diagnostic code library.</h1>
+            <p class="page-sub">Search by code, symptom or component. Every entry gives you the likely causes, a logical test order and a realistic cost range — so you can diagnose instead of guess.</p>
+          </div>
+          <div class="hero-mini-panel">
+            <div class="big" id="libraryCount">73</div>
+            <div class="small">Documented<br>P · B · C · U codes</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="library">
+      <h2 class="visually-hidden">Browse diagnostic codes</h2>
+      <div class="library-toolbar">
+        <div class="container">
+          <div class="toolbar-top">
+            <div class="toolbar-search">
+              <div class="search-shell">
+                <div class="search-field">
+                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                  <label class="visually-hidden" for="codeSearch">Search codes, symptoms or components</label>
+                  <input class="search-input" id="codeSearch" type="search" placeholder="Search P0300, misfire, EVAP, rough idle…" autocomplete="off" spellcheck="false">
+                  <button class="btn btn-primary btn-sm" type="button" id="searchButton">Search</button>
+                </div>
+              </div>
+            </div>
+            <span class="kbd-hint"><span class="kbd">/</span> to search</span>
+            <div class="select-wrap">
+              <label class="visually-hidden" for="severityFilter">Filter by severity</label>
+              <select id="severityFilter">
+                <option value="all">All severities</option>
+                <option value="critical">Critical</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+            <div class="select-wrap">
+              <label class="visually-hidden" for="sortSelect">Sort codes</label>
+              <select id="sortSelect">
+                <option value="code">Code A–Z</option>
+                <option value="severity">Severity: high to low</option>
+                <option value="cost-asc">Typical cost: low to high</option>
+                <option value="cost-desc">Typical cost: high to low</option>
+                <option value="relevance">Best match</option>
+              </select>
+            </div>
+            <label class="toggle" for="savedOnly">
+              <input type="checkbox" id="savedOnly">
+              <span>Saved only</span>
+            </label>
+            <button class="btn btn-ghost btn-sm" type="button" id="resetFilters">Reset</button>
+          </div>
+          <div class="filter-row">
+            <div class="chip-group" id="systemChips" role="group" aria-label="Filter by OBD-II system">
+              <button class="chip is-active" type="button" data-system="all">All <span class="count" data-count="all">73</span></button>
+              <button class="chip" type="button" data-system="P"><span class="letter">P</span> Powertrain <span class="count" data-count="P">0</span></button>
+              <button class="chip" type="button" data-system="B"><span class="letter">B</span> Body <span class="count" data-count="B">0</span></button>
+              <button class="chip" type="button" data-system="C"><span class="letter">C</span> Chassis <span class="count" data-count="C">0</span></button>
+              <button class="chip" type="button" data-system="U"><span class="letter">U</span> Network <span class="count" data-count="U">0</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="result-line" id="resultLine" aria-live="polite"></div>
+        <div class="code-grid library-grid" id="codeGrid"></div>
+        <noscript>
+          <div class="empty-state" style="margin-top: 20px;">
+            <h3>JavaScript is required for the code library</h3>
+            <p>This library is a self-contained static site. Enable JavaScript to search and filter the diagnostic codes.</p>
+          </div>
+        </noscript>
+
+        <div class="facts" style="margin-top: 40px;">
+          <div class="fact">
+            <div class="fact-label">01 · Diagnose first</div>
+            <h4>Test, do not guess</h4>
+            <p>A code names a circuit or system, not always the failed part. Confirm power, ground, signal and mechanical condition before replacing components.</p>
+          </div>
+          <div class="fact">
+            <div class="fact-label">02 · Verify fitment</div>
+            <h4>Year, make, model, engine</h4>
+            <p>Definitions, test values and repair procedures vary. Use factory service information or a reputable repair database for your exact vehicle.</p>
+          </div>
+          <div class="fact">
+            <div class="fact-label">03 · Safety first</div>
+            <h4>Some codes mean stop</h4>
+            <p>A flashing check engine light, low oil pressure, overheating, brake or SRS faults are not "drive it home" situations. Stop safely and get help.</p>
+          </div>
+        </div>
+
+        <div class="disclaimer" style="margin-top: 22px;">
+          <strong>Estimates and scope.</strong> Cost ranges are typical US independent-shop estimates for parts and labor and can vary widely by vehicle, region and condition. Content is educational and is not a substitute for professional diagnosis. Airbag, high-voltage hybrid, ABS hydraulic and fuel-system work can be dangerous; use a qualified technician.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="codeModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalCode">
+      <div class="modal-head">
+        <div class="modal-head-main">
+          <div class="modal-code" id="modalCode">P0300</div>
+          <h2 class="modal-title" id="modalTitle">Code details</h2>
+          <div class="modal-tags" id="modalTags"></div>
+        </div>
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close code details">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 14 4-4"/><circle cx="12" cy="14" r="1" fill="currentColor"/>
+              </svg>
+            </span>
+            <span class="brand-name">Torque<span class="accent">Code</span><small>Diagnostics &amp; efficiency</small></span>
+          </a>
+          <p>Clear, practical OBD-II guidance and safe eco-driving advice. Built to help you ask better questions before you spend money.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Library</h3>
+          <ul>
+            <li><a href="codes.html">All codes</a></li>
+            <li><a href="codes.html?system=P">Powertrain</a></li>
+            <li><a href="codes.html?system=B">Body</a></li>
+            <li><a href="codes.html?system=C">Chassis</a></li>
+            <li><a href="codes.html?system=U">Network</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Learn</h3>
+          <ul>
+            <li><a href="index.html#anatomy">How to read a code</a></li>
+            <li><a href="tips.html">Eco-driving tips</a></li>
+            <li><a href="tips.html#calculator">Fuel savings calculator</a></li>
+            <li><a href="codes.html?view=saved">Saved codes</a></li>
+            <li><a href="about.html">About TorqueCode</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Before you turn a wrench</h3>
+          <p class="footer-note">Trouble codes are a starting point, not a repair order. Definitions and test procedures vary by year, make, model and engine. Confirm with factory service information and TSBs.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> TorqueCode</span>
+        <span>Built for wrenching, learning &amp; driving smarter</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data-codes.js"></script>
+  <script src="js/data-codes-extra.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/codes.js"></script>
+</body>
+</html>
