@@ -430,6 +430,44 @@ ul, ol {
   border-color: var(--accent-line);
 }
 
+.units-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background 0.16s, color 0.16s, border-color 0.16s;
+}
+
+.units-btn:hover,
+.units-btn:focus-visible {
+  background: var(--panel-2);
+  color: var(--text);
+  border-color: var(--accent-line);
+}
+
+.units-btn[data-current-units="metric"] {
+  color: var(--text);
+}
+
+@media (max-width: 420px) {
+  .units-btn {
+    min-width: 48px;
+    padding: 0 7px;
+    font-size: 9px;
+  }
+}
+
 .theme-toggle .sun {
   display: none;
 }
