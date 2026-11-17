@@ -246,6 +246,113 @@
     });
   }
 
+  /* ---------- currency (auto-detected from the visitor's region) ---------- */
+
+  // Rough example pump prices are per litre; the calculator opens with them
+  // and the visitor is expected to type their own local price.
+  var CURRENCY_BY_REGION = {
+    ZA: { code: "ZAR", symbol: "R", perLitre: 22.5 },
+    US: { code: "USD", symbol: "$", perLitre: 0.93 },
+    GB: { code: "GBP", symbol: "£", perLitre: 1.45 },
+    IE: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    DE: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    FR: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    ES: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    IT: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    NL: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    BE: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    AT: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    PT: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    FI: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    GR: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    SK: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    SI: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    LT: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    LV: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    EE: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    LU: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    CY: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    MT: { code: "EUR", symbol: "€", perLitre: 1.7 },
+    AU: { code: "AUD", symbol: "A$", perLitre: 1.9 },
+    NZ: { code: "NZD", symbol: "NZ$", perLitre: 2.6 },
+    CA: { code: "CAD", symbol: "C$", perLitre: 1.55 },
+    IN: { code: "INR", symbol: "₹", perLitre: 105 },
+    JP: { code: "JPY", symbol: "¥", perLitre: 175 },
+    CN: { code: "CNY", symbol: "¥", perLitre: 7.6 },
+    BR: { code: "BRL", symbol: "R$", perLitre: 6.1 },
+    MX: { code: "MXN", symbol: "MX$", perLitre: 24 },
+    AE: { code: "AED", symbol: "AED ", perLitre: 2.8 },
+    SA: { code: "SAR", symbol: "SAR ", perLitre: 2.33 },
+    CH: { code: "CHF", symbol: "CHF ", perLitre: 1.75 },
+    SE: { code: "SEK", symbol: "kr ", perLitre: 18.5 },
+    NO: { code: "NOK", symbol: "kr ", perLitre: 21 },
+    DK: { code: "DKK", symbol: "kr ", perLitre: 13.5 },
+    PL: { code: "PLN", symbol: "zł ", perLitre: 6.3 },
+    TR: { code: "TRY", symbol: "₺", perLitre: 45 },
+    SG: { code: "SGD", symbol: "S$", perLitre: 2.9 },
+    HK: { code: "HKD", symbol: "HK$", perLitre: 24 },
+    KR: { code: "KRW", symbol: "₩", perLitre: 1650 },
+    TH: { code: "THB", symbol: "฿", perLitre: 38 },
+    PH: { code: "PHP", symbol: "₱", perLitre: 60 },
+    ID: { code: "IDR", symbol: "Rp ", perLitre: 10000 },
+    MY: { code: "MYR", symbol: "RM ", perLitre: 2.05 },
+    NG: { code: "NGN", symbol: "₦", perLitre: 900 },
+    KE: { code: "KES", symbol: "KSh ", perLitre: 190 },
+    EG: { code: "EGP", symbol: "E£", perLitre: 15 },
+    GH: { code: "GHS", symbol: "GH₵", perLitre: 16 }
+  };
+
+  var CURRENCY_FALLBACK = { code: "USD", symbol: "$", perLitre: 1.6 };
+  var currency = null;
+
+  function detectRegion() {
+    var languages = navigator.languages && navigator.languages.length
+      ? navigator.languages
+      : [navigator.language || ""];
+    for (var i = 0; i < languages.length; i++) {
+      try {
+        if (window.Intl && window.Intl.Locale) {
+          var locale = new window.Intl.Locale(languages[i]);
+          if (locale.region) return String(locale.region).toUpperCase();
+        }
+      } catch (err) {
+        /* fall through to the string parse */
+      }
+      var match = /^[a-z]{2,3}[-_]([a-z]{2})\b/i.exec(languages[i] || "");
+      if (match) return match[1].toUpperCase();
+    }
+    return "";
+  }
+
+  function getCurrency() {
+    if (currency) return currency;
+    var region = detectRegion();
+    var found = CURRENCY_BY_REGION[region] || CURRENCY_FALLBACK;
+    currency = {
+      code: found.code,
+      symbol: found.symbol,
+      perLitre: found.perLitre,
+      region: region || null
+    };
+    return currency;
+  }
+
+  function formatCurrency(value) {
+    var amount = Math.round(Number(value) || 0).toLocaleString("en-US");
+    return getCurrency().symbol + amount;
+  }
+
+  function defaultFuelPrice(nextUnits) {
+    var perLitre = getCurrency().perLitre;
+    var price = nextUnits === "us" ? perLitre * 3.785412 : perLitre;
+    return Math.round(price * 100) / 100;
+  }
+
+  function initCurrency() {
+    var current = getCurrency();
+    document.documentElement.setAttribute("data-currency", current.code);
+  }
+
   function initNav() {
     var toggle = document.querySelector("[data-menu-toggle]");
     var nav = document.querySelector(".nav");
@@ -354,6 +461,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     initUnits();
+    initCurrency();
     initTheme();
     initThemeButtons();
     initNav();
@@ -381,6 +489,12 @@
       set: setUnits,
       apply: applyUnits,
       detect: detectUnits
+    },
+    currency: {
+      get: getCurrency,
+      format: formatCurrency,
+      defaultPrice: defaultFuelPrice,
+      detectRegion: detectRegion
     }
   };
 })();

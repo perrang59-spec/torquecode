@@ -194,9 +194,22 @@
   };
 
   var UNIT_CONFIG = {
-    us: { distance: 12000, economy: 25, price: 3.5, distanceUnit: "mi", economyUnit: "MPG", priceUnit: "$ / gal", perUnit: "/ mi" },
-    metric: { distance: 19000, economy: 9.4, price: 1.55, distanceUnit: "km", economyUnit: "L/100 km", priceUnit: "$ / L", perUnit: "/ km" }
+    us: { distance: 12000, economy: 25, price: 3.5, distanceUnit: "mi", economyUnit: "MPG", perUnit: "/ mi" },
+    metric: { distance: 19000, economy: 9.4, price: 1.55, distanceUnit: "km", economyUnit: "L/100 km", perUnit: "/ km" }
   };
+
+  var MONEY = TC.currency || null;
+  var SYMBOL = MONEY ? MONEY.get().symbol : "$";
+
+  // Start the pump price at a plausible local figure instead of a hardcoded one.
+  if (MONEY) {
+    UNIT_CONFIG.us.price = MONEY.defaultPrice("us");
+    UNIT_CONFIG.metric.price = MONEY.defaultPrice("metric");
+  }
+
+  function priceUnitLabel() {
+    return SYMBOL.trim() + (units === "us" ? " / gal" : " / L");
+  }
 
   function round(value, decimals) {
     var factor = Math.pow(10, decimals);
@@ -209,6 +222,7 @@
   }
 
   function formatMoney(value) {
+    if (MONEY) return MONEY.format(value);
     return "$" + Math.round(value).toLocaleString("en-US");
   }
 
@@ -223,7 +237,7 @@
     if (calc.priceLabel) calc.priceLabel.textContent = units === "us" ? "Fuel price" : "Fuel price";
     if (calc.distanceUnit) calc.distanceUnit.textContent = config.distanceUnit;
     if (calc.economyUnit) calc.economyUnit.textContent = config.economyUnit;
-    if (calc.priceUnit) calc.priceUnit.textContent = config.priceUnit;
+    if (calc.priceUnit) calc.priceUnit.textContent = priceUnitLabel();
     if (calc.newEconomyUnit) calc.newEconomyUnit.textContent = units === "us" ? "MPG" : "L/100 km";
     document.querySelectorAll("[data-units]").forEach(function (btn) {
       var active = btn.getAttribute("data-units") === units;
@@ -294,7 +308,7 @@
         "Cutting fuel use by " + reduction + "% at " +
         formatDistance(distance) + " " + UNIT_CONFIG[units].distanceUnit + ", " +
         (economy || 0) + " " + UNIT_CONFIG[units].economyUnit + " and " +
-        "$" + (price || 0).toFixed(2) + " " + UNIT_CONFIG[units].priceUnit.replace("$ ", "") + ".";
+        SYMBOL + (price || 0).toFixed(2) + " / " + (units === "us" ? "gal." : "L.");
     }
     if (calc.fuel) {
       calc.fuel.textContent = Math.round(savedFuel).toLocaleString("en-US") + (units === "us" ? " gal" : " L");
@@ -309,7 +323,7 @@
       calc.newEconomy.value = newEconomy ? newEconomy.toFixed(1) : "—";
     }
     if (calc.perDistance) {
-      calc.perDistance.textContent = costPerDistance ? "$" + costPerDistance.toFixed(2) + " " + UNIT_CONFIG[units].perUnit : "—";
+      calc.perDistance.textContent = costPerDistance ? SYMBOL + costPerDistance.toFixed(2) + " " + UNIT_CONFIG[units].perUnit : "—";
     }
     updateRangeFill();
   }
