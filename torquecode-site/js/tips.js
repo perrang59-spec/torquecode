@@ -54,18 +54,23 @@
     );
   }
 
+  function pick(item, field) {
+    var metric = item[field + "Metric"];
+    return units === "metric" && metric ? metric : item[field];
+  }
+
   function tipHTML(tip) {
     return (
       '<article class="tip-detail' + (isDone(tip.id) ? " is-done" : "") + '" id="tip-' + TC.escapeHTML(tip.id) + '">' +
       '<div class="tip-detail-head">' +
       '<div class="tip-icon">' + TC.icon(tip.icon) + "</div>" +
-      "<h3>" + TC.escapeHTML(tip.title) + "</h3>" +
+      "<h3>" + TC.escapeHTML(pick(tip, "title")) + "</h3>" +
       "</div>" +
-      "<p>" + TC.escapeHTML(tip.body) + "</p>" +
-      '<div class="tip-why"><strong>Why it works</strong>' + TC.escapeHTML(tip.why) + "</div>" +
+      "<p>" + TC.escapeHTML(pick(tip, "body")) + "</p>" +
+      '<div class="tip-why"><strong>Why it works</strong>' + TC.escapeHTML(pick(tip, "why")) + "</div>" +
       '<div class="tip-detail-foot">' +
       '<div class="tip-tags">' +
-      '<span class="tag impact">' + TC.escapeHTML(tip.impact) + "</span>" +
+      '<span class="tag impact">' + TC.escapeHTML(pick(tip, "impact")) + "</span>" +
       '<span class="tag">' + TC.escapeHTML(tip.effort) + "</span>" +
       '<span class="tag">' + TC.escapeHTML(tip.category) + "</span>" +
       "</div>" +
@@ -156,8 +161,8 @@
       return (
         '<div class="fact">' +
         '<div class="fact-label">' + TC.escapeHTML(fact.label) + "</div>" +
-        "<h4>" + TC.escapeHTML(fact.title) + "</h4>" +
-        "<p>" + TC.escapeHTML(fact.body) + "</p>" +
+        "<h4>" + TC.escapeHTML(pick(fact, "title")) + "</h4>" +
+        "<p>" + TC.escapeHTML(pick(fact, "body")) + "</p>" +
         "</div>"
       );
     }).join("");
@@ -165,7 +170,7 @@
 
   /* ---------- savings calculator ---------- */
 
-  var units = "us";
+  var units = TC.units ? TC.units.get() : "us";
   var calc = {
     distance: document.getElementById("calcDistance"),
     economy: document.getElementById("calcEconomy"),
@@ -226,7 +231,6 @@
       btn.setAttribute("aria-pressed", active ? "true" : "false");
     });
   }
-
   function convertValues(from, to) {
     if (from === to) return;
     var distance = readNumber(calc.distance);
@@ -310,30 +314,25 @@
     updateRangeFill();
   }
 
-  function setUnits(next, convert) {
-    if (next !== "us" && next !== "metric") return;
-    if (convert && next !== units) convertValues(units, next);
+  function onUnitsChange(event) {
+    var next = event.detail && event.detail.units;
+    if ((next !== "us" && next !== "metric") || next === units) return;
+    convertValues(units, next);
     units = next;
-    TC.storage.set("tc-calc-units", units);
     updateLabels();
     calculate();
+    renderTips();
+    renderFacts();
   }
 
   function initCalculator() {
     if (!calc.distance || !calc.reduction) return;
 
-    var savedUnits = TC.storage.get("tc-calc-units", "us");
-    units = savedUnits === "metric" ? "metric" : "us";
+    units = TC.units ? TC.units.get() : "us";
     var config = UNIT_CONFIG[units];
     calc.distance.value = String(config.distance);
     calc.economy.value = String(config.economy);
     calc.price.value = String(config.price);
-
-    document.querySelectorAll("[data-units]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        setUnits(btn.getAttribute("data-units"), true);
-      });
-    });
 
     [calc.distance, calc.economy, calc.price].forEach(function (input) {
       input.addEventListener("input", calculate);
@@ -351,6 +350,7 @@
     updateProgress();
     bindTips();
     initCalculator();
+    document.addEventListener("tc:unitschange", onUnitsChange);
     document.querySelectorAll("#tipChips .chip").forEach(function (chip) {
       chip.setAttribute("aria-pressed", chip.classList.contains("is-active") ? "true" : "false");
     });

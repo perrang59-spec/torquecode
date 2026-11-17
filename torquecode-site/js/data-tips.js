@@ -19,8 +19,11 @@ window.TC_TIPS = [
     category: "Driving habits",
     icon: "target",
     title: "Ease off above 50 mph",
+    titleMetric: "Ease off above 80 km/h",
     body: "Keep highway speed at or near the limit. A 5 mph reduction above 50 mph can save meaningful fuel on a long commute, and the time difference is usually only a minute or two.",
+    bodyMetric: "Keep highway speed at or near the limit. Dropping 8 km/h above 80 km/h can save meaningful fuel on a long commute, and the time difference is usually only a minute or two.",
     why: "Aerodynamic drag rises with the square of speed, so the engine works much harder at 75 mph than at 65 mph. This is one of the largest single fuel levers for highway drivers.",
+    whyMetric: "Aerodynamic drag rises with the square of speed, so the engine works much harder at 120 km/h than at 105 km/h. This is one of the largest single fuel levers for highway drivers.",
     impact: "7–14%",
     effort: "Free"
   },
@@ -31,7 +34,9 @@ window.TC_TIPS = [
     title: "Kill the long idle",
     body: "Start the car, wait a few seconds for oil pressure, and drive gently. Skip the 10-minute driveway warm-up, and shut the engine off while waiting at long lights, school pickups or drive-throughs where it is safe and legal.",
     why: "An idling engine gets zero miles per gallon while burning roughly 0.2–0.5 gallons per hour. Modern fuel-injected engines warm up faster under light load than at idle.",
+    whyMetric: "An idling engine burns fuel for nothing — roughly 0.8–1.9 litres per hour. Modern fuel-injected engines warm up faster under light load than at idle.",
     impact: "0.2–0.5 gal/hr",
+    impactMetric: "0.8–1.9 L/hr",
     effort: "Free",
     quick: true
   },
@@ -226,6 +231,7 @@ window.TC_TIPS = [
     body: "Use the octane rating in your owner's manual. If regular is recommended, premium buys no extra power or economy. If premium is required, do not cheap out and trigger knock-control retard.",
     why: "Higher-octane fuel resists knock but does not contain more energy. Running premium in a regular-fuel car is mostly an unnecessary expense; running regular in a premium-required car can hurt performance and economy.",
     impact: "Save 20–30¢/gal",
+    impactMetric: "Save 5–8¢/L",
     effort: "Free"
   }
 ];
@@ -244,7 +250,8 @@ window.TC_FACTS = [
   {
     label: "Reality check",
     title: "Windows down vs. A/C is speed-dependent",
-    body: "Below roughly 45–50 mph, open windows usually cost less fuel than A/C. At highway speed, the aerodynamic drag of open windows typically outweighs the compressor load."
+    body: "Below roughly 45–50 mph, open windows usually cost less fuel than A/C. At highway speed, the aerodynamic drag of open windows typically outweighs the compressor load.",
+    bodyMetric: "Below roughly 70–80 km/h, open windows usually cost less fuel than A/C. At highway speed, the aerodynamic drag of open windows typically outweighs the compressor load."
   },
   {
     label: "Safety first",

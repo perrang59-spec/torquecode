@@ -169,6 +169,83 @@
     setTheme(saved);
   }
 
+  /* ---------- measurement units (miles/gallons vs kilometres/litres) ---------- */
+
+  var UNITS_KEY = "tc-units";
+  var units = null;
+
+  function detectUnits() {
+    var languages = navigator.languages && navigator.languages.length
+      ? navigator.languages
+      : [navigator.language || ""];
+    for (var i = 0; i < languages.length; i++) {
+      if (/^en[-_]?(us|lr|mm)\b/i.test(languages[i])) return "us";
+    }
+    return "metric";
+  }
+
+  function getUnits() {
+    if (units) return units;
+    var saved = storage.get(UNITS_KEY, null);
+    if (saved !== "us" && saved !== "metric") {
+      // Respect a preference saved by the older calculator-only toggle.
+      var legacy = storage.get("tc-calc-units", null);
+      saved = legacy === "us" || legacy === "metric" ? legacy : detectUnits();
+    }
+    units = saved;
+    return units;
+  }
+
+  function unitsCopy(next) {
+    return next === "metric"
+      ? { label: "km · L", action: "Switch to miles and gallons" }
+      : { label: "mi · gal", action: "Switch to kilometres and litres" };
+  }
+
+  function applyUnits() {
+    var current = getUnits();
+    document.documentElement.setAttribute("data-units-mode", current);
+
+    var copy = unitsCopy(current);
+    document.querySelectorAll("[data-units-toggle]").forEach(function (btn) {
+      var label = btn.querySelector("[data-units-label]");
+      if (label) label.textContent = copy.label;
+      btn.setAttribute("aria-label", copy.action);
+      btn.setAttribute("title", copy.action);
+      btn.setAttribute("data-current-units", current);
+    });
+
+    document.querySelectorAll("[data-units]").forEach(function (btn) {
+      var active = btn.getAttribute("data-units") === current;
+      btn.classList.toggle("is-active", active);
+      btn.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+  }
+
+  function setUnits(next) {
+    if (next !== "us" && next !== "metric") return;
+    var previous = getUnits();
+    if (next === previous) return;
+    units = next;
+    storage.set(UNITS_KEY, units);
+    applyUnits();
+    document.dispatchEvent(new CustomEvent("tc:unitschange", { detail: { units: units, previous: previous } }));
+  }
+
+  function initUnits() {
+    applyUnits();
+    document.querySelectorAll("[data-units-toggle]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setUnits(getUnits() === "metric" ? "us" : "metric");
+      });
+    });
+    document.querySelectorAll("[data-units]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setUnits(btn.getAttribute("data-units"));
+      });
+    });
+  }
+
   function initNav() {
     var toggle = document.querySelector("[data-menu-toggle]");
     var nav = document.querySelector(".nav");
@@ -276,6 +353,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    initUnits();
     initTheme();
     initThemeButtons();
     initNav();
@@ -297,6 +375,12 @@
     toggleCodeSaved: toggleCodeSaved,
     toast: toast,
     searchCodes: searchCodes,
-    setTheme: setTheme
+    setTheme: setTheme,
+    units: {
+      get: getUnits,
+      set: setUnits,
+      apply: applyUnits,
+      detect: detectUnits
+    }
   };
 })();
