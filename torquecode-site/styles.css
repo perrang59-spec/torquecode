@@ -2830,6 +2830,32 @@ input[type="range"]::-moz-range-thumb {
   text-underline-offset: 3px;
 }
 
+.gear-link {
+  margin-top: 16px !important;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.gear-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--accent-soft);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--accent-text);
+}
+
+.gear-link a:hover {
+  border-color: var(--accent-text);
+}
+
 /* ---------- Toast ---------- */
 
 .toast {
