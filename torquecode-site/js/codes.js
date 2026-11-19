@@ -25,10 +25,30 @@
     return VALID_SORTS.indexOf(value) !== -1 ? value : "code";
   }
 
+  function readBrand(value) {
+    var lower = String(value || "").toLowerCase();
+    if (!lower || lower === "all") return "all";
+    var brands = window.TC_BRANDS || [];
+    for (var i = 0; i < brands.length; i++) {
+      if (brands[i].id === lower) return brands[i].id;
+      if ((brands[i].aliases || []).indexOf(lower) !== -1) return brands[i].id;
+    }
+    return "all";
+  }
+
+  function brandById(id) {
+    var brands = window.TC_BRANDS || [];
+    for (var i = 0; i < brands.length; i++) {
+      if (brands[i].id === id) return brands[i];
+    }
+    return null;
+  }
+
   var state = {
     q: params.get("q") || "",
     system: readSystem(params.get("system")),
     severity: readSeverity(params.get("severity")),
+    brand: readBrand(params.get("brand")),
     sort: readSort(params.get("sort")),
     savedOnly: params.get("view") === "saved"
   };
@@ -37,6 +57,8 @@
     search: document.getElementById("codeSearch"),
     searchButton: document.getElementById("searchButton"),
     severity: document.getElementById("severityFilter"),
+    brand: document.getElementById("brandFilter"),
+    brandNote: document.getElementById("brandNote"),
     sort: document.getElementById("sortSelect"),
     savedOnly: document.getElementById("savedOnly"),
     reset: document.getElementById("resetFilters"),
@@ -59,7 +81,7 @@
   }
 
   function hasFilters() {
-    return Boolean(state.q) || state.system !== "all" || state.severity !== "all" || state.savedOnly;
+    return Boolean(state.q) || state.system !== "all" || state.severity !== "all" || state.brand !== "all" || state.savedOnly;
   }
 
   function syncURL() {
@@ -67,6 +89,7 @@
     if (state.q) query.set("q", state.q);
     if (state.system !== "all") query.set("system", state.system);
     if (state.severity !== "all") query.set("severity", state.severity);
+    if (state.brand !== "all") query.set("brand", state.brand);
     if (state.sort !== "code") query.set("sort", state.sort);
     if (state.savedOnly) query.set("view", "saved");
     var search = query.toString();
@@ -105,6 +128,10 @@
     var filtered = searched.filter(function (code) {
       if (state.system !== "all" && code.system !== state.system) return false;
       if (state.severity !== "all" && code.severity !== state.severity) return false;
+      if (state.brand !== "all") {
+        var mapped = window.TC_BRANDS_FOR_CODE && window.TC_BRANDS_FOR_CODE[code.code];
+        if (!mapped || !mapped.some(function (brand) { return brand.id === state.brand; })) return false;
+      }
       if (state.savedOnly && !TC.isCodeSaved(code.code)) return false;
       return true;
     });
@@ -130,6 +157,14 @@
 
   function render() {
     var filtered = getFiltered();
+    var selectedBrand = state.brand === "all" ? null : brandById(state.brand);
+
+    if (els.brandNote) {
+      els.brandNote.textContent = selectedBrand
+        ? selectedBrand.name + ": " + selectedBrand.note + " " + (window.TC_BRAND_DISCLAIMER || "")
+        : "";
+      els.brandNote.hidden = !selectedBrand;
+    }
 
     els.grid.innerHTML = filtered.length
       ? filtered.map(cardHTML).join("")
@@ -144,6 +179,7 @@
     if (state.q) summary += ' for “<strong>' + TC.escapeHTML(state.q) + '</strong>”';
     if (state.system !== "all") summary += " · " + TC.escapeHTML(TC.systems[state.system]);
     if (state.severity !== "all") summary += " · " + TC.escapeHTML(TC.severityLabels[state.severity]) + " severity";
+    if (selectedBrand) summary += " · " + TC.escapeHTML(selectedBrand.name) + " (general guide)";
     if (state.savedOnly) summary += " · saved only";
 
     els.resultLine.innerHTML =
@@ -170,10 +206,20 @@
     });
   }
 
+  function populateBrands() {
+    if (!els.brand) return;
+    var brands = window.TC_BRANDS || [];
+    els.brand.innerHTML = '<option value="all">All brands</option>' + brands.map(function (brand) {
+      return '<option value="' + TC.escapeHTML(brand.id) + '">' + TC.escapeHTML(brand.name) + "</option>";
+    }).join("");
+    els.brand.value = state.brand;
+  }
+
   function clearAll() {
-    state = { q: "", system: "all", severity: "all", sort: "code", savedOnly: false };
+    state = { q: "", system: "all", severity: "all", brand: "all", sort: "code", savedOnly: false };
     els.search.value = "";
     els.severity.value = "all";
+    els.brand.value = "all";
     els.sort.value = "code";
     els.savedOnly.checked = false;
     render();
@@ -375,6 +421,11 @@
       render();
     });
 
+    els.brand.addEventListener("change", function () {
+      state.brand = readBrand(els.brand.value);
+      render();
+    });
+
     els.sort.addEventListener("change", function () {
       state.sort = readSort(els.sort.value);
       render();
@@ -471,12 +522,14 @@
   function hydrateControls() {
     els.search.value = state.q;
     els.severity.value = state.severity;
+    els.brand.value = state.brand;
     els.sort.value = state.sort;
     els.savedOnly.checked = state.savedOnly;
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     updateCounts();
+    populateBrands();
     hydrateControls();
     render();
     bindEvents();

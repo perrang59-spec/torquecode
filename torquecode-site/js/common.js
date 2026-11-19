@@ -434,6 +434,10 @@
 
     return source
       .map(function (code) {
+        var brandText = (window.TC_BRANDS_FOR_CODE && window.TC_BRANDS_FOR_CODE[code.code] || [])
+          .map(function (brand) { return brand.name + " " + brand.aliases.join(" "); })
+          .join(" ");
+
         var haystack = [
           code.code,
           code.title,
@@ -441,7 +445,8 @@
           code.desc,
           (code.symptoms || []).join(" "),
           (code.causes || []).join(" "),
-          (code.fixes || []).join(" ")
+          (code.fixes || []).join(" "),
+          brandText
         ].join(" ").toLowerCase();
 
         var matched = words.every(function (word) { return haystack.indexOf(word) !== -1; });
