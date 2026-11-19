@@ -355,7 +355,7 @@
 
   function initNav() {
     var toggle = document.querySelector("[data-menu-toggle]");
-    var nav = document.querySelector(".nav");
+    var nav = document.getElementById("site-nav") || document.querySelector(".nav");
     if (!toggle || !nav) return;
 
     function close() {
