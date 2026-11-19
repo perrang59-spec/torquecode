@@ -1617,6 +1617,17 @@ ul, ol {
   margin-top: 12px;
 }
 
+.brand-note {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent-line);
+  border-radius: 0 8px 8px 0;
+  background: var(--accent-soft);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
 .chip-group {
   display: flex;
   gap: 4px;
