@@ -161,6 +161,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               </select>
             </div>
             <div class="select-wrap">
+              <label class="visually-hidden" for="brandFilter">Filter by car brand</label>
+              <select id="brandFilter">
+                <option value="all">All brands</option>
+              </select>
+            </div>
+            <div class="select-wrap">
               <label class="visually-hidden" for="sortSelect">Sort codes</label>
               <select id="sortSelect">
                 <option value="code">Code Aâ€“Z</option>
@@ -185,6 +191,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               <button class="chip" type="button" data-system="U"><span class="letter">U</span> Network <span class="count" data-count="U">0</span></button>
             </div>
           </div>
+          <p class="brand-note" id="brandNote" hidden></p>
         </div>
       </div>
 
@@ -305,6 +312,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   <script src="js/data-codes.js"></script>
   <script src="js/data-codes-extra.js"></script>
+  <script src="js/data-brands.js"></script>
   <script src="js/common.js"></script>
   <script src="js/codes.js"></script>
 </body>
