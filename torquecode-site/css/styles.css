@@ -195,6 +195,15 @@ ul, ol {
   display: none;
 }
 
+.worldwide-note {
+  margin: 8px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
 .mono {
   font-family: var(--font-mono);
 }
