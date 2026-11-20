@@ -210,7 +210,7 @@
     document.querySelectorAll("[data-units-toggle]").forEach(function (btn) {
       var label = btn.querySelector("[data-units-label]");
       if (label) label.textContent = copy.label;
-      btn.setAttribute("aria-label", copy.action);
+      btn.setAttribute("aria-label", copy.label + " " + copy.action);
       btn.setAttribute("title", copy.action);
       btn.setAttribute("data-current-units", current);
     });
