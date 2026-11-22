@@ -3027,13 +3027,15 @@ input[type="range"]::-moz-range-thumb {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 14px;
+  padding: 11px 16px;
   border: 1px solid var(--line);
   border-radius: 9px;
   background: var(--accent-soft);
   font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.08em;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--accent-text);
